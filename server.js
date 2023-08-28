@@ -1,24 +1,17 @@
-const express = require("express");
-const bodyParser = require('body-parser');
-const dotenv = require("dotenv").config();
+require('dotenv').config()
+const express = require('express');
+const cors = require('cors'); 
+const locationRoutes = require('./routes/locationRoutes');
+const etaRoutes = require('./routes/etaRoutes');
+const directionsRoutes = require('./routes/directionsRoutes');
 
-//Local Imports
-const connectDb = require('./db/index.js')
-const patientRouter = require('./routes/patient.Router.js')
-const userRoutes = require('./routes/user.Router.js')
-const errorHandler = require('./middlewares/errorHandler.js')
-
-connectDb();
 const app = express();
+const port = 9000;
 
-const port = process.env.PORT || 5000;
-
-app.use(bodyParser.json());
+app.use(cors());
 app.use(express.json());
-app.use("/api/patients", patientRouter);
-app.use('/api/users', userRoutes )
-app.use(errorHandler);
+app.use('/api', locationRoutes);
+app.use('/api/eta', etaRoutes);
+app.use('/api/directions', directionsRoutes);
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
+app.listen(port, () => console.log('Server Started'))
