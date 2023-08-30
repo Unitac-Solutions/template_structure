@@ -12,7 +12,7 @@ module.exports.getCase = async (id) => {
     return row;
 } 
 
-module.exports.deleteCasebyId = async (id) => {
+module.exports.deleteCase = async (id) => {
     const [{affectedRows}] =  await  db.query("DELETE From patient_case WHERE patient_id = ?",[id])
     .catch(err => console.log(err))
     return affectedRows;

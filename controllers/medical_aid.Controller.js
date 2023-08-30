@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Medical_aid = require("../services/medical_aid.service")
 
 const getmedical_aids = asyncHandler( async ( req, res) => {
-    const medical_aids = await Medical_aid.getmedical_aids()
+    const [medical_aids] = await Medical_aid.getmedical_aids()
     res.status(200).json(medical_aids)
 });
 
@@ -14,7 +14,6 @@ const createmedical_aid = asyncHandler(  async ( req, res)=> {
         res.status(400);
         throw new Error("All fields are required. !");
     }
-        await  Medical_aid.createmedical_aid(req.body);
         res.status(201).send( "Created Succesfully.")
 });
 

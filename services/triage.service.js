@@ -1,24 +1,24 @@
 const db = require("../database/db");
 
-module.exports.getSpecialists = async () => {
+module.exports.getTriages = async () => {
     const rows =  await  db.query("SELECT * From triage")
     .catch(err => console.log(err))
     return rows;
 } 
 
-module.exports.getSpecialist = async (id) => {
+module.exports.getTriage = async (id) => {
     const [row] =  await  db.query("SELECT * From triage WHERE triage_id = ?",[id])
     .catch(err => console.log(err))
     return row;
 } 
 
-module.exports.deleteSpecialistbyId = async (id) => {
+module.exports.deleteTriage = async (id) => {
     const [{affectedRows}] =  await  db.query("DELETE From triage WHERE triage_id = ?",[id])
     .catch(err => console.log(err))
     return affectedRows;
 } 
 
-module.exports.createSpecialist = async (obj , id = 0) => {
+module.exports.createTriage = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO triage(
         tew_id, user_type, branch, username, email, user_reg, street_name, city_town, province, postal_code
     ) VALUES(?,?,?,?,?,?,?,?,?)`,
@@ -27,8 +27,8 @@ module.exports.createSpecialist = async (obj , id = 0) => {
     return data;
 } 
 
-module.exports.updateSpecialist = async (obj , id ) => {
-    const [data] =  await  db.query(`UPDATE anticipated_specialist
+module.exports.updateTriage = async (obj , id ) => {
+    const [data] =  await  db.query(`UPDATE triage
     SET user_type  = ?, 
     branch  = ?, 
     username  = ?, 

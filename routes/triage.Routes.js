@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {gettriage, gettriages, createtriage, deletetriage, updatetriage} = require("../controllers/triage.Controller");
+const {getTriages, getTriage, createTriage, deleteTriage, updateTriage} = require("../controllers/triage.Controller");
 
-router.route("/").get(gettriages)
-router.route("/:id").get(gettriage)
-router.route("/").post(createtriage)
-router.route("/:id").put(updatetriage)
-router.route("/:id").delete(deletetriage)
+router.route("/").get(getTriages)
+router.route("/:id").get(getTriage)
+router.route("/").post(createTriage)
+router.route("/:id").put(updateTriage)
+router.route("/:id").delete(deleteTriage)
 
 module.exports = router;

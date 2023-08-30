@@ -1,6 +1,6 @@
 const db = require("../database/db");
 
-module.exports.getAllpersonnels = async () => {
+module.exports.getpersonnels = async () => {
     const rows =  await  db.query("SELECT * From personnel")
     .catch(err => console.log(err))
     return rows;
@@ -28,12 +28,12 @@ module.exports.createpersonnel = async (obj , id = 0) => {
 } 
 
 module.exports.updatepersonnel = async (obj , id ) => {
-    const [data] =  await  db.query(`UPDATE personnels
+    const [data] =  await  db.query(`UPDATE personnel
     SET personnelId = ?, 
     first_name = ?, 
     last_name = ?, 
     occupation = ?
-    WHERE personel_id = ? `,
+    WHERE personel_id = ?`,
      [obj.personnelId, obj.first_name, obj.last_name, obj.occupation, id])
     .catch(err => console.log(err))
     return data;

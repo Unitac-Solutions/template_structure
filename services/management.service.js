@@ -12,7 +12,7 @@ module.exports.getmanagement = async (id) => {
     return row;
 } 
 
-module.exports.deletemanagementbyId = async (id) => {
+module.exports.deletemanagement = async (id) => {
     const [{affectedRows}] =  await  db.query("DELETE From management WHERE management_id = ?",[id])
     .catch(err => console.log(err))
     return affectedRows;
@@ -87,7 +87,14 @@ module.exports.updatemanagement = async (obj , id ) => {
     airway_ic_drain_size = ?,
     airway_gp_tube_size = ?    
     WHERE management_id = ? `,
-     [obj.specalist, obj.surgeon, obj.surgeon_specify, obj.managemen_specify, id])
+     [obj.airway_npo2,obj.airway_neb,obj.airway_cpap_fio2,obj.airway_cpap_pip,obj.airway_cpap_peep,obj.airway_cpap_rr,obj.airway_cpap_vt,obj.airway_vent_mode,obj.airway_vent_fio2,
+        obj.airway_vent_pip,obj.airway_vent_peep,obj.airway_vent_rr,obj.airway_vent_vt,obj.airway_et_tube_size,obj.airway_et_tube_position_in_cm,
+        obj.airway_et_tube_cuffed,obj.airway_et_tube_oral_nasal,obj.airway_crico,obj.airway_needle_decompression,obj.airway_ic_drain,obj.airway_suction,obj.airway_op_tube,obj.circulation_time_on,
+        obj.circulation_ng_tube,obj.circulation_urine_cather,obj.circulation_defb,obj.circulation_pacing,obj.circulation_pasg,obj.infusion_type,
+        obj.infusion_site,obj.infusion_volume,obj.infusion_time_up,obj.infusion_time_down,obj.medication,obj.medication_type,obj.medication_dose,
+        obj.medication_route,obj.medication_time,obj.medication_admin_by,obj.tourniquet,obj.circulation_time_off,obj.joules,obj.ma,obj.legs_abd,
+        obj.c_time_on,obj.c_time_off,obj.cpap_saturation,obj.airway_ic_drain_postion,obj.airway_ic_drain_size,obj.airway_gp_tube_size
+        , id])
     .catch(err => console.log(err))
     return data;
 } 

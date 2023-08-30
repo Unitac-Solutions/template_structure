@@ -28,7 +28,7 @@ module.exports.createvital_examination = async (obj , id = 0) => {
 } 
 
 module.exports.updatevital_examination = async (obj , id ) => {
-    const [data] =  await  db.query(`UPDATE anticipated_vital_examination
+    const [data] =  await  db.query(`UPDATE vital_examination
     SET respiritory_rate = ?, 
     respiritory_rhythm = ?, 
     respiritory_depth = ?, 

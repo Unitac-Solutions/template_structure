@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Clinical_history = require("../services/clinical_history.service")
 
 const getclinical_historys = asyncHandler( async ( req, res) => {
-    const clinical_historys = await Clinical_history.getclinical_historys()
+    const [clinical_historys] = await Clinical_history.getclinical_historys()
     res.status(200).json(clinical_historys)
 });
 
@@ -21,10 +21,13 @@ const createclinical_history = asyncHandler(  async ( req, res)=> {
 const getclinical_history = asyncHandler( async ( req, res) => {
     const clinical_history = await Clinical_history.getclinical_history(req.params.id);
     if(!clinical_history ){
-        res.status(404);
-        throw new Error("clinical_history not found");
-    } 
-    res.status(200).json(clinical_history)
+        res.status(404).json({message: "clinical_history not found"});
+        // throw new Error("clinical_history not found");
+    }else{
+        res.status(200).json(clinical_history);
+    }
+    
+    res.status(200).json({message: "clinical_history was found"});
 });
 
 const updateclinical_history = asyncHandler(  async ( req, res)=> {

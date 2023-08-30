@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const General_examination = require("../services/general_examination.service")
 
 const getgeneral_examinations = asyncHandler( async ( req, res) => {
-    const general_examinations = await General_examination.getgeneral_examinations()
+    const [general_examinations] = await General_examination.getgeneral_examinations()
     res.status(200).json(general_examinations)
 });
 

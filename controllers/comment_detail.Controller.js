@@ -4,14 +4,20 @@ const asyncHandler = require("express-async-handler")
 const Comment_detail = require("../services/comment_detail.service")
 
 const getcomment_details = asyncHandler( async ( req, res) => {
-    const comment_details = await Comment_detail.getcomment_details()
+    const [comment_details] = await Comment_detail.getcomment_details()
     res.status(200).json(comment_details)
 });
 
 const createcomment_detail = asyncHandler(  async ( req, res)=> {
     const {comment} = req.body;
+    if(!comment){
+        res.status(400).json({message:"All fields are required. !"});
+        //throw new Error("All fields are required. !"); 
+    }else{
         await  Comment_detail.createcomment_detail(req.body);
         res.status(201).send( "Created Succesfully.")
+    }
+        
 });
 
 const getcomment_detail = asyncHandler( async ( req, res) => {

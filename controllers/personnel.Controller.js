@@ -5,7 +5,7 @@ const Personnel = require("../services/personnel.service")
 
 
 const getpersonnels = asyncHandler( async ( req, res) => {
-    const personnels = await Personnel.getpersonnels()
+    const [personnels] = await Personnel.getpersonnels()
     res.status(200).json(personnels)
 });
 

@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Handover = require("../services/handover.service")
 
 const gethandovers = asyncHandler( async ( req, res) => {
-    const handovers = await Handover.gethandovers()
+    const [handovers] = await Handover.gethandovers()
     res.status(200).json(handovers)
 });
 

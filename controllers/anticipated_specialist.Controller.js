@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Specialist = require("../services/anticipated_specialist.service")
 
 const getspecialists = asyncHandler( async ( req, res) => {
-    const specialists = await Specialist.getSpecialists()
+    const [specialists] = await Specialist.getSpecialists()
     res.status(200).json(specialists)
 });
 

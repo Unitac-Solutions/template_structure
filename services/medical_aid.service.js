@@ -40,7 +40,7 @@ module.exports.updatemedical_aid = async (obj , id ) => {
     next_of_kin_contact = ?, 
     next_of_kin_relationship = ? 
     WHERE med_aid_id = ? `,
-     [obj.provider, obj.name, obj.med_aid_option, obj.number, obj.dept_code, obj.main_member, obj.auth_number, obj.next_of_kin_name, obj.next_of_kin_contact, obj.next_of_kin_relationship])
+     [obj.provider, obj.name, obj.med_aid_option, obj.number, obj.dept_code, obj.main_member, obj.auth_number, obj.next_of_kin_name, obj.next_of_kin_contact, obj.next_of_kin_relationship, id])
     .catch(err => console.log(err))
     return data;
 } 

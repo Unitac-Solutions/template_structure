@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Tew = require("../services/tew.service")
 
 const gettews = asyncHandler( async ( req, res) => {
-    const tews = await Tew.gettews()
+    const [tews] = await Tew.gettews()
     res.status(200).json(tews)
 });
 

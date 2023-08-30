@@ -35,9 +35,9 @@ module.exports.updateAnticipatedCare = async (obj , id ) => {//updating also tho
     drugs = ?,
     airway_and_breathing_specify = ?,
     circulation_specify = ?,
-    drugs_specify = ?,
-    WHERE anticipated_care_id = ? `,
-     [obj.airway_and_breathing, obj.circulation, obj.drugs, obj.airway_and_breathing_specify, obj.circulation_specify, obj.drugs_specify, id])
+    drugs_specify = ?
+    WHERE anticipated_care_id = ?`,
+     [obj.anticipated_specialist_id, obj.airway_and_breathing, obj.circulation, obj.drugs, obj.airway_and_breathing_specify, obj.circulation_specify, obj.drugs_specify, id])
     .catch(err => console.log(err))
     return data;
 }

@@ -12,7 +12,7 @@ module.exports.gethandover = async (id) => {
     return row;
 } 
 
-module.exports.deletehandoverbyId = async (id) => {
+module.exports.deletehandover = async (id) => {
     const [{affectedRows}] =  await  db.query("DELETE From handover WHERE handover_id = ?",[id])
     .catch(err => console.log(err))
     return affectedRows;

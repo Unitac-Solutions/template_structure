@@ -1,16 +1,16 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler")
 
-const Management = require("../services/anticipated_management.service")
+const Management = require("../services/management.service")
 
 const getmanagements = asyncHandler( async ( req, res) => {
-    const managements = await Management.getmanagements()
+    const [managements] = await Management.getmanagements()
     res.status(200).json(managements)
 });
 
 const createmanagement = asyncHandler(  async ( req, res)=> {
     const {airway_npo2, airway_neb, airway_cpap_fio2, airway_cpap_pip, airway_cpap_peep, airway_cpap_rr, airway_cpap_vt, airway_vent_mode, airway_vent_fio2, airway_vent_pip, airway_vent_peep, airway_vent_rr, airway_vent_vt, airway_et_tube_size, airway_et_tube_position_in_cm, airway_et_tube_cuffed, airway_et_tube_oral_nasal, airway_crico, airway_needle_decompression, airway_ic_drain, airway_suction, airway_op_tube, circulation_time_on, circulation_ng_tube, circulation_urine_cather, circulation_defb, circulation_pacing, circulation_pasg, infusion_type, infusion_site, infusion_volume, infusion_time_up, infusion_time_down, medication, medication_type, medication_dose, medication_route, medication_time, medication_admin_by, tourniquet, circulation_time_off, joules, ma, legs_abd, c_time_on, c_time_off, cpap_saturation, airway_ic_drain_postion, airway_ic_drain_size, airway_gp_tube_size } = req.body;
-    if (!specalist || !surgeon || !surgeon_specify || !management_specify) {
+    if (!airway_npo2 || !airway_neb || !airway_cpap_fio2 || !airway_cpap_pip || !airway_cpap_peep || !airway_cpap_rr || !airway_cpap_vt || !airway_vent_mode || !airway_vent_fio2 || !airway_vent_pip || !airway_vent_peep || !airway_vent_rr || !airway_vent_vt || !airway_et_tube_size || !airway_et_tube_position_in_cm || !airway_et_tube_cuffed || !airway_et_tube_oral_nasal || !airway_crico || !airway_needle_decompression || !airway_ic_drain || !airway_suction || !airway_op_tube || !circulation_time_on || !circulation_ng_tube || !circulation_urine_cather || !circulation_defb || !circulation_pacing || !circulation_pasg || !infusion_type || !infusion_site || !infusion_volume || !infusion_time_up || !infusion_time_down || !medication || !medication_type || !medication_dose || !medication_route || !medication_time || !medication_admin_by || !tourniquet || !circulation_time_off || !joules || !ma || !legs_abd || !c_time_on || !c_time_off || !cpap_saturation || !airway_ic_drain_postion || !airway_ic_drain_size || !airway_gp_tube_size) {
         res.status(400);
         throw new Error("All fields are required. !");
     }

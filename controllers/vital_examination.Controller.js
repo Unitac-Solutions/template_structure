@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Vital_examination = require("../services/vital_eximination.service")
 
 const getvital_examinations = asyncHandler( async ( req, res) => {
-    const vital_examinations = Vital_examination.getvital_examinations()
+    const [vital_examinations] = await Vital_examination.getvital_examinations()
     res.status(200).json(vital_examinations)
 });
 

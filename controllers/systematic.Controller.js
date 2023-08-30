@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Systematic = require("../services/systematic.service")
 
 const getsystematics = asyncHandler( async ( req, res) => {
-    const systematics = await Systematic.getsystematics()
+    const [systematics] = await Systematic.getsystematics()
     res.status(200).json(systematics)
 });
 

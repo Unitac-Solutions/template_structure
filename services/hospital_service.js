@@ -29,12 +29,15 @@ module.exports.deleteHospital = async (id) => {
 
 
 //Currently no update value can be edited except if you asigning anticipated cares by new hospitals so currently it is a comment
-/*
+
 module.exports.updateHospital = async (obj , id ) => {
     const [data] =  await  db.query(`UPDATE hospital
     SET anticipated_care_id = ?,
+    comment_detail_id = ?,	
+    personel_id = ?,	
+    handover_id	= ?
     WHERE hospital_id = ? `,
-     [obj.anticipated_care_id, id])
+     [obj.anticipated_care_id, obj.comment_detail_id, obj.personel_id, obj.handover_id, id])
     .catch(err => console.log(err))
     return data;
-}*/
+}

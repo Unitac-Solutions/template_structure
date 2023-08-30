@@ -1,7 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler")
 
-const Hospital = require('../services/hospital.service');
+const Hospital = require('../services/hospital_service');
 
 //________________________________________________________________________________________________
 const getHospitals = asyncHandler( async ( req, res) => {
@@ -32,7 +32,7 @@ const createHospital = asyncHandler(  async ( req, res) => {
     }
 });
 
-//________________________________________________________________________________________________
+//________________________________________________________________________________________________CURRENTLY NOT IN USE
 const updateHospital = asyncHandler(async (req, res) => {
     const hospital = await Hospital.updateHospital(req.body, req.params.id);
     if (!hospital) {

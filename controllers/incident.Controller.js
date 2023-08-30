@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler")
 const Incident = require("../services/incident.service")
 
 const getincidents = asyncHandler( async ( req, res) => {
-    const incidents = await Incident.getincidents()
+    const [incidents] = await Incident.getincidents()
     res.status(200).json(incidents)
 });
 
