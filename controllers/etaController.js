@@ -3,10 +3,11 @@ const axios = require('axios');
 const config = require('../config/constants');
 
 const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+const etaEndPoint = process.env.ETA_API_ENDPOINT;
 
 function formatTime(seconds) {
     const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
+    const minutes = Math.floor((seconds % 3600) / 60);   
     const remainingSeconds = seconds % 60;
     
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
@@ -15,8 +16,9 @@ function formatTime(seconds) {
 async function calculateETA(origin, destination) {
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin}&destinations=${destination}&key=${apiKey}`
+      `${etaEndPoint}&origins=${origin}&destinations=${destination}&key=${apiKey}`
     );
+    
 
     const durationInSeconds = response.data.rows[0].elements[0].duration.value;
     const currentTime = new Date();
@@ -30,10 +32,24 @@ async function calculateETA(origin, destination) {
     };
   } catch (error) {
     console.error('Error:', error.message);
-    throw new Error('An error occurred while calculating ETA.');
+    res.status(500).json({ error: 'An error occurred while calculating ETA' });
+  }
+}
+
+async function getETA(req, res) {
+  const { origin, destination } = req.params;
+
+  try {
+    const etaData = await calculateETA(origin, destination);
+    res.json(etaData);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while getting ETA' });
   }
 }
 
 module.exports = {
-  calculateETA,
+  getETA,
 };
+
+
+

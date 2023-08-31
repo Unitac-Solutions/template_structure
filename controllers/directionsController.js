@@ -1,19 +1,20 @@
 const axios = require('axios');
-const config = require('../config/constants');
-
 const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+const directionsApiEndpoint = process.env.DIRECTIONS_API_ENDPOINT;
+const errorHandler = require('../middlewares/errorHandler');
 
-async function getDirections(origin, destination) {
+async function getDirections(req, res) {
+  const { origin, destination } = req.query;
+
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`
+      `${directionsApiEndpoint}?origin=${origin}&destination=${destination}&key=${apiKey}`
     );
 
     const routes = response.data.routes;
-    return routes;
+    res.json(routes);
   } catch (error) {
-    console.error('Error:', error);
-    throw new Error('An error occurred while fetching directions.');
+    res.status(500).json({ error: 'An error occurred while fetching directions' });
   }
 }
 
