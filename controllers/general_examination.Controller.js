@@ -5,7 +5,12 @@ const General_examination = require("../services/general_examination.service")
 
 const getgeneral_examinations = asyncHandler( async ( req, res) => {
     const [general_examinations] = await General_examination.getgeneral_examinations()
-    res.status(200).json(general_examinations)
+    if(!general_examinations){
+        res.status(404).json({message: "General Examinations not found"})
+    }else{
+        res.status(200).json(general_examinations)
+    }
+    
 });
 
 const creategeneral_examination = asyncHandler(  async ( req, res)=> {
@@ -19,7 +24,7 @@ const creategeneral_examination = asyncHandler(  async ( req, res)=> {
 });
 
 const getgeneral_examination = asyncHandler( async ( req, res) => {
-    const general_examination = await General_examination.getgeneral_examination(req.params.id);
+    const [general_examination] = await General_examination.getgeneral_examination(req.params.id);
     if(!general_examination ){
         res.status(404);
         throw new Error("general_examination not found");

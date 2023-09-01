@@ -5,7 +5,11 @@ const Incident = require("../services/incident.service")
 
 const getincidents = asyncHandler( async ( req, res) => {
     const [incidents] = await Incident.getincidents()
-    res.status(200).json(incidents)
+    if(!incidents){
+        res.status(404).json({message: "Incident details not found"})
+    }else{
+        res.status(200).json(incidents)
+    }
 });
 
 const createincident = asyncHandler(  async ( req, res)=> {
@@ -19,7 +23,7 @@ const createincident = asyncHandler(  async ( req, res)=> {
 });
 
 const getincident = asyncHandler( async ( req, res) => {
-    const incident = await Incident.getincident(req.params.id);
+    const [incident] = await Incident.getincident(req.params.id);
     if(!incident ){
         res.status(404);
         throw new Error("incident not found");

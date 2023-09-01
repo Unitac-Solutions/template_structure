@@ -5,7 +5,11 @@ const Comment_detail = require("../services/comment_detail.service")
 
 const getcomment_details = asyncHandler( async ( req, res) => {
     const [comment_details] = await Comment_detail.getcomment_details()
-    res.status(200).json(comment_details)
+    if(!comment_details){
+        res.status(404).json({message: "comments not found"})
+    }else{
+        res.status(200).json(comment_details)
+    }
 });
 
 const createcomment_detail = asyncHandler(  async ( req, res)=> {
@@ -21,7 +25,7 @@ const createcomment_detail = asyncHandler(  async ( req, res)=> {
 });
 
 const getcomment_detail = asyncHandler( async ( req, res) => {
-    const comment_detail = await Comment_detail.getcomment_detail(req.params.id);
+    const [comment_detail] = await Comment_detail.getcomment_detail(req.params.id);
     if(!comment_detail ){
         res.status(404);
         throw new Error("comment_detail not found");

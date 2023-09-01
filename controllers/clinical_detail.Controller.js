@@ -6,7 +6,11 @@ const Clinical = require('../services/clinical_detail.service');
 //________________________________________________________________________________________________
 const getclinicals = asyncHandler( async ( req, res) => {
     const [clinicals] = await Clinical.getClinical_details();
-    res.status(200).json(clinicals)
+    if(!clinicals){
+        res.status(404).json({message: "Clinicals not found"})
+    }else{
+        res.status(200).json(clinicals)
+    }
 });
 
 //________________________________________________________________________________________________

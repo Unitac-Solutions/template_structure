@@ -5,7 +5,11 @@ const Medical_aid = require("../services/medical_aid.service")
 
 const getmedical_aids = asyncHandler( async ( req, res) => {
     const [medical_aids] = await Medical_aid.getmedical_aids()
-    res.status(200).json(medical_aids)
+    if(!medical_aids){
+        res.status(404).json({message: "Medical Aids not found"})
+    }else{
+        res.status(200).json(medical_aids)
+    }
 });
 
 const createmedical_aid = asyncHandler(  async ( req, res)=> {
@@ -18,12 +22,13 @@ const createmedical_aid = asyncHandler(  async ( req, res)=> {
 });
 
 const getmedical_aid = asyncHandler( async ( req, res) => {
-    const medical_aid = await Medical_aid.getmedical_aid(req.params.id);
-    if(!medical_aid ){
+    const [medical_aid] = await Medical_aid.getmedical_aid(req.params.id);
+    if(!medical_aid){
         res.status(404);
         throw new Error("medical_aid not found");
-    } 
-    res.status(200).json(medical_aid)
+    }else{ 
+        res.status(200).json(medical_aid)
+    }
 });
 
 const updatemedical_aid = asyncHandler(  async ( req, res)=> {

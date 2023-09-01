@@ -1,11 +1,25 @@
-get http://localhost:3000/patient/
+###GETTING ALL
+get http://localhost:5000/patient/
+
+###GETTING SINGLE
+get http://localhost:5000/patient/5
+
+###CREATING 
+POST  http://localhost:5000/patient/
 Content-Type:  application/json
 
 {
-    "last_name": "Mark ",
-    "first_name": "ZAKZAK",
-    "initials": "MZ",
-    "age": 155,
-    "gender": "Male",
-    "race": "Silver",
+    "last_name": "Mzimba",
+    "first_name": "Nondumiso",
+    "initials": "MN",
+    "age": 22,
+    "gender": "Female",
+    "race": "African",
+    "triage_id": 27
 }
+
+###UPDATING
+PUT  http://localhost:5000/patient/5
+
+###DELETING
+DELETE url HTTP/1.1 http://localhost:5000/patient/5

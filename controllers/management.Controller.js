@@ -5,7 +5,12 @@ const Management = require("../services/management.service")
 
 const getmanagements = asyncHandler( async ( req, res) => {
     const [managements] = await Management.getmanagements()
-    res.status(200).json(managements)
+    if(!managements){
+        res.status(404).json({message: "Management not found"})
+    }else{
+        res.status(200).json(managements)
+    }
+    
 });
 
 const createmanagement = asyncHandler(  async ( req, res)=> {
@@ -19,7 +24,7 @@ const createmanagement = asyncHandler(  async ( req, res)=> {
 });
 
 const getmanagement = asyncHandler( async ( req, res) => {
-    const management = await Management.getmanagement(req.params.id);
+    const [management] = await Management.getmanagement(req.params.id);
     if(!management ){
         res.status(404);
         throw new Error("management not found");

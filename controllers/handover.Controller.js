@@ -5,7 +5,11 @@ const Handover = require("../services/handover.service")
 
 const gethandovers = asyncHandler( async ( req, res) => {
     const [handovers] = await Handover.gethandovers()
-    res.status(200).json(handovers)
+    if(!handovers){
+        res.status(404).json({message: "Handovers not found"})
+    }else{
+        res.status(200).json(handovers)
+    }
 });
 
 const createhandover = asyncHandler(  async ( req, res)=> {
@@ -19,7 +23,7 @@ const createhandover = asyncHandler(  async ( req, res)=> {
 });
 
 const gethandover = asyncHandler( async ( req, res) => {
-    const handover = await Handover.gethandover(req.params.id);
+    const [handover] = await Handover.gethandover(req.params.id);
     if(!handover ){
         res.status(404);
         throw new Error("handover not found");

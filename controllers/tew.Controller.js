@@ -5,7 +5,12 @@ const Tew = require("../services/tew.service")
 
 const gettews = asyncHandler( async ( req, res) => {
     const [tews] = await Tew.gettews()
-    res.status(200).json(tews)
+    if(!tews){
+        res.status(404).json({message: "Tews not found"})
+    }else{
+        res.status(200).json(tews)
+    }
+    
 });
 
 const createtew = asyncHandler(  async ( req, res)=> {
@@ -19,7 +24,7 @@ const createtew = asyncHandler(  async ( req, res)=> {
 });
 
 const gettew = asyncHandler( async ( req, res) => {
-    const tew = await Tew.gettew(req.params.id);
+    const [tew] = await Tew.gettew(req.params.id);
     if(!tew ){
         res.status(404);
         throw new Error("tew not found");

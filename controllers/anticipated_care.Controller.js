@@ -5,7 +5,11 @@ const AnticipatedCare = require("../services/anticipated_care.service");
 
 const getAnticipatedCares = asyncHandler( async ( req, res) => {
     const [anticipatedCare] = await AnticipatedCare.getAnticipatedCares()
-    res.status(200).json(anticipatedCare)
+    if(!anticipatedCare){
+        res.status(404).json({message: "Anticipated Care not found"})
+    }else{
+        res.status(200).json(anticipatedCare)
+    }
 });
 
 const createAnticipatedCare = asyncHandler(  async ( req, res)=> {
@@ -20,16 +24,16 @@ const createAnticipatedCare = asyncHandler(  async ( req, res)=> {
 });
 
 const getAnticipatedCare = asyncHandler( async ( req, res) => {
-    const anticipatedCare = await AnticipatedCare.getAnticipatedCare(req.params.id);
+    const [anticipatedCare] = await AnticipatedCare.getAnticipatedCare(req.params.id);
     if(!anticipatedCare){
-        res.status(404);
-        throw new Error("Anticipated care not found");
+        res.status(404).json({message: "Anticipated care not found"});
+        //throw new Error("");
     } 
     res.status(200).json(anticipatedCare)
 });
 
 const updateAnticipatedCare = asyncHandler(  async ( req, res)=> {
-    const anticipatedCare = await AnticipatedCare.updateAnticipatedCare(req.body, req.params.id);
+    const [anticipatedCare] = await AnticipatedCare.updateAnticipatedCare(req.body, req.params.id);
     if(!anticipatedCare){
         res.status(404);
         throw new Error("Anticipated care not found");

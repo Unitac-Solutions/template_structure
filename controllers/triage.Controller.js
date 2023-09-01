@@ -5,7 +5,12 @@ const Triage = require("../services/triage.service")
 
 const getTriages = asyncHandler( async ( req, res) => {
     const [triages] = await Triage.getTriages()
-    res.status(200).json(triages)
+    if(!triages){
+        res.status(404).json({message: "Triages not found"}) 
+    }else{
+        res.status(200).json(triages)
+    }
+    
 });
 
 const createTriage = asyncHandler(  async ( req, res)=> {

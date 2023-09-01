@@ -6,7 +6,12 @@ const Patient = require('../services/patient.service');
 //________________________________________________________________________________________________
 const getPatients = asyncHandler( async ( req, res) => {
     const [patients] = await Patient.getPatients()
-    res.status(200).json(patients)
+    if(!patients){
+        res.status(404).json({message: "patients not found"})
+    }else{
+        res.status(200).json(patients)
+    }
+    
 });
 
 //________________________________________________________________________________________________
@@ -14,7 +19,6 @@ const getPatient = asyncHandler( async ( req, res) => {
     const [patient] = await Patient.getPatient(req.params.id);
     if(!patient ){
         res.status(404).json({message: "patient not found"})
-        //throw new Error("patient not found");
     }else{
         res.status(200).json(patient);
     }
@@ -24,8 +28,7 @@ const getPatient = asyncHandler( async ( req, res) => {
 const createPatient = asyncHandler(  async ( req, res) => {
     const {last_name, first_name, initials, age, gender, race, triage_id } = req.body;
     if (!last_name || !first_name || !initials || !age || !gender ||!race || !triage_id) {
-        res.status(400);
-        throw new Error("All fields are required. !");
+        res.status(400).json({message: "All fields are required. !"});
     }else{
         await  Patient.createPatient(req.body);
         res.status(201).send( "Created Succesfully.");
@@ -37,7 +40,6 @@ const updatePatient = asyncHandler(async (req, res) => {
     const patient = await Patient.updatePatient(req.body, req.params.id);
     if (!patient) {
       res.status(404).json({message: "Patient not found"});
-      //throw new Error("Patient not found");
     } else {
       res.status(200).json(patient);
     }

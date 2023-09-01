@@ -5,7 +5,11 @@ const Vital_examination = require("../services/vital_eximination.service")
 
 const getvital_examinations = asyncHandler( async ( req, res) => {
     const [vital_examinations] = await Vital_examination.getvital_examinations()
-    res.status(200).json(vital_examinations)
+    if(!vital_examinations){
+        res.status(404).json({message: "Vital Examinations not found"})
+    }else{
+        res.status(200).json(vital_examinations)
+    }
 });
 
 const createvital_examination = asyncHandler(  async ( req, res)=> {
@@ -19,7 +23,7 @@ const createvital_examination = asyncHandler(  async ( req, res)=> {
 });
 
 const getvital_examination = asyncHandler( async ( req, res) => {
-    const vital_examination = await Vital_examination.getvital_examination(req.params.id);
+    const [vital_examination] = await Vital_examination.getvital_examination(req.params.id);
     if(!vital_examination ){
         res.status(404);
         throw new Error("vital_examination not found");

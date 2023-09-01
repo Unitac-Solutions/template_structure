@@ -6,7 +6,11 @@ const Personnel = require("../services/personnel.service")
 
 const getpersonnels = asyncHandler( async ( req, res) => {
     const [personnels] = await Personnel.getpersonnels()
-    res.status(200).json(personnels)
+    if(!personnels){
+        res.status(404).json({message: "Personels not found"})
+    }else{
+        res.status(200).json(personnels)
+    }
 });
 
 const createpersonnel = asyncHandler(  async ( req, res)=> {
@@ -20,7 +24,7 @@ const createpersonnel = asyncHandler(  async ( req, res)=> {
 });
 
 const getpersonnel = asyncHandler( async ( req, res) => {
-    const personnel = await Personnel.getpersonnel(req.params.id);
+    const [personnel] = await Personnel.getpersonnel(req.params.id);
     if(!personnel ){
         res.status(404);
         throw new Error("personnel not found");

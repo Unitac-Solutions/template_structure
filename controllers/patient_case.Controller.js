@@ -5,7 +5,11 @@ const Patient_case = require("../services/patient_case.service")
 
 const getpatient_cases = asyncHandler( async ( req, res) => {
     const [patient_cases] = await Patient_case.getCases()
-    res.status(200).json(patient_cases)
+    if(!patient_cases){
+        res.status(404).json({message: "Patient Cases not found"})
+    }else{
+        res.status(200).json(patient_cases)
+    }
 });
 
 const createpatient_case = asyncHandler(  async ( req, res)=> {
@@ -19,7 +23,7 @@ const createpatient_case = asyncHandler(  async ( req, res)=> {
 });
 
 const getpatient_case = asyncHandler( async ( req, res) => {
-    const patient_case = await Patient_case.getCase(req.params.id);
+    const [patient_case] = await Patient_case.getCase(req.params.id);
     if(!patient_case ){
         res.status(404);
         throw new Error("patient_case not found");

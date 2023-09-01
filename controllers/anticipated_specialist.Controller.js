@@ -5,7 +5,11 @@ const Specialist = require("../services/anticipated_specialist.service")
 
 const getspecialists = asyncHandler( async ( req, res) => {
     const [specialists] = await Specialist.getSpecialists()
-    res.status(200).json(specialists)
+    if(!specialists){
+        res.status(404).json({message: "Specialists not found"})
+    }else{
+        res.status(200).json(specialists)
+    }
 });
 
 const createspecialist = asyncHandler(  async ( req, res)=> {
@@ -19,7 +23,7 @@ const createspecialist = asyncHandler(  async ( req, res)=> {
 });
 
 const getspecialist = asyncHandler( async ( req, res) => {
-    const specialist = await Specialist.getSpecialist(req.params.id);
+    const [specialist] = await Specialist.getSpecialist(req.params.id);
     if(!specialist ){
         res.status(404);
         throw new Error("specialist not found");

@@ -6,7 +6,11 @@ const Hospital = require('../services/hospital_service');
 //________________________________________________________________________________________________
 const getHospitals = asyncHandler( async ( req, res) => {
     const [hospitals] = await Hospital.getHospitals()
-    res.status(200).json(hospitals)
+    if(!hospitals){
+        res.status(404).json({message: "hospitals are not found"})
+    }else{
+        res.status(200).json(hospitals)
+    }
 });
 
 //________________________________________________________________________________________________
