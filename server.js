@@ -1,24 +1,19 @@
-const express = require("express");
-const bodyParser = require('body-parser');
-const dotenv = require("dotenv").config();
-
-//Local Imports
-const connectDb = require('./db/index.js')
-const patientRouter = require('./routes/patient.Router.js')
-const userRoutes = require('./routes/user.Router.js')
-const errorHandler = require('./middlewares/errorHandler.js')
-
-connectDb();
+const express = require('express');
 const app = express();
+const port = 5000;
 
-const port = process.env.PORT || 5000;
+const corsMiddleware = require('./Middlewares/corsMiddleware');
+const kafkaHospitalRoute = require('./Routes/kafkaHospitalRoute');
+const kafkaPatientRoute = require('./Routes/kafkaPatientRoute');
+const kafkaParamedicRoute = require('./Routes/kafkaParamedicRoute');
 
-app.use(bodyParser.json());
-app.use(express.json());
-app.use("/api/patients", patientRouter);
-app.use('/api/users', userRoutes )
-app.use(errorHandler);
+
+app.use(corsMiddleware);
+
+app.use('/api/kafkaHospital', kafkaHospitalRoute); // specifying a base URL for my API routes
+app.use('/api/kafkaPatient', kafkaPatientRoute);
+app.use('/api/kafkaParamedic', kafkaParamedicRoute);
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
+  console.log(`Server is running on port ${port}`);
+});
