@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getcomment_details = async () => {
-    const rows =  await  db.query("SELECT * From comment_detail")
+    const [rows] =  await  db.query("SELECT * From comment_detail")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -31,7 +31,7 @@ module.exports.updatecomment_detail = async (obj , id ) => {
     const [data] =  await  db.query(`UPDATE comment_detail
     SET comment = ?
     WHERE comment_detail_id = ? `,
-     [obj.comment, id])
+    [obj.comment, id])
     .catch(err => console.log(err))
     return data;
 } 

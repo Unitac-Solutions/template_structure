@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getSpecialists = async () => {
-    const rows =  await  db.query("SELECT * From anticipated_specialist")
+    const [rows] =  await  db.query("SELECT * From anticipated_specialist")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -22,7 +22,7 @@ module.exports.createSpecialist = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO anticipated_specialist(
         anticipated_specialist, anticipated_surgeon, anticipated_surgeon_specify, anticipated_specialist_specify
     ) VALUES(?,?,?,?)`,
-    [obj.specalist, obj.surgeon, obj.surgeon_specify, obj.specialist_specify])
+    [obj.anticipated_specialist, obj.anticipated_surgeon, obj.anticipated_surgeon_specify, obj.anticipated_specialist_specify])
     .catch(err => console.log(err))
     return data;
 } 
@@ -33,8 +33,8 @@ module.exports.updateSpecialist = async (obj , id ) => {
     anticipated_surgeon = ?,
     anticipated_surgeon_specify = ?,
     anticipated_specialist_specify = ?
-    WHERE anticipated_specialist_id = ? `,
-     [obj.specalist, obj.surgeon, obj.surgeon_specify, obj.specialist_specify, id])
+    WHERE anticipated_specialist_id = ?`,
+    [obj.anticipated_specialist, obj.anticipated_surgeon, obj.anticipated_surgeon_specify, obj.anticipated_specialist_specify, id])
     .catch(err => console.log(err))
     return data;
 } 

@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getAnticipatedCares = async () => {
-    const rows =  await  db.query("SELECT * From anticipated_care")
+    const [rows] =  await  db.query("SELECT * From anticipated_care")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -13,7 +13,7 @@ module.exports.getAnticipatedCare = async (id) => {
 }
 
 module.exports.createAnticipatedCare = async (obj , id = 0) => {//adding most required fields of the table
-    const [data] =  await  db.query(`INSERT INTO patients(
+    const [data] =  await  db.query(`INSERT INTO anticipated_care(
         anticipated_specialist_id, airway_and_breathing, circulation, drugs, airway_and_breathing_specify, circulation_specify, drugs_specify
     ) VALUES(?,?,?,?,?,?,?)`,
     [obj.anticipated_specialist_id, obj.airway_and_breathing, obj.circulation, obj.drugs, obj.airway_and_breathing_specify, obj.circulation_specify, obj.drugs_specify])
@@ -37,7 +37,7 @@ module.exports.updateAnticipatedCare = async (obj , id ) => {//updating also tho
     circulation_specify = ?,
     drugs_specify = ?
     WHERE anticipated_care_id = ?`,
-     [obj.anticipated_specialist_id, obj.airway_and_breathing, obj.circulation, obj.drugs, obj.airway_and_breathing_specify, obj.circulation_specify, obj.drugs_specify, id])
+    [obj.anticipated_specialist_id, obj.airway_and_breathing, obj.circulation, obj.drugs, obj.airway_and_breathing_specify, obj.circulation_specify, obj.drugs_specify, id])
     .catch(err => console.log(err))
     return data;
 }

@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getTriages = async () => {
-    const rows =  await  db.query("SELECT * From triage")
+    const [rows] =  await  db.query("SELECT * From triage")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -21,7 +21,7 @@ module.exports.deleteTriage = async (id) => {
 module.exports.createTriage = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO triage(
         tew_id, user_type, branch, username, email, user_reg, street_name, city_town, province, postal_code
-    ) VALUES(?,?,?,?,?,?,?,?,?)`,
+    ) VALUES(?,?,?,?,?,?,?,?,?,?)`,
     [obj.tew_id, obj.user_type, obj.branch, obj.username, obj.email, obj.user_reg, obj.street_name, obj.city_town, obj.province, obj.postal_code])
     .catch(err => console.log(err))
     return data;

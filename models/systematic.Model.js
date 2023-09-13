@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getsystematics = async () => {
-    const rows =  await  db.query("SELECT * From systematic")
+    const [rows] =  await  db.query("SELECT * From systematic")
     .catch(err => console.log(err))
     return rows;
 } 

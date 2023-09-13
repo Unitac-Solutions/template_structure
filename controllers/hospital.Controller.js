@@ -1,4 +1,3 @@
-const express = require("express");
 const asyncHandler = require("express-async-handler")
 
 const Hospital = require('../models/hospital.Model');
@@ -6,15 +5,18 @@ const Hospital = require('../models/hospital.Model');
 ///________________________________________________________________________________________________
 const getHospitals = asyncHandler( async ( req, res) => {
     const [hospitals] = await Hospital.getHospitals()
-    res.status(200).json(hospitals)
+    if(!hospitals){   
+        res.status(404).json({message: 'Hospitals records not found'});
+    }else{
+        res.status(200).json(hospitals);
+    }
 });
 
 //________________________________________________________________________________________________
 const getHospital = asyncHandler( async ( req, res) => {
     const [hospital] = await Hospital.getHospital(req.params.id);
-    if(!hospital ){
+    if(!hospital){
         res.status(404).json({message: "Hospital not found"})
-        //throw new Error("Hospital not found");
     }else{
         res.status(200).json(hospital);
     }
@@ -24,11 +26,10 @@ const getHospital = asyncHandler( async ( req, res) => {
 const createHospital = asyncHandler(  async ( req, res) => {
     const {anticipated_care_id, comment_detail_id, personel_id, handover_id } = req.body;
     if (!anticipated_care_id|| !comment_detail_id|| !personel_id|| !handover_id) {
-        res.status(400);
-        throw new Error("All fields are required. !");
+        res.status(400).json({message:'All fields are required. !'});
     }else{
         await  Hospital.createHospital(req.body);
-        res.status(201).send( "Created Succesfully.");
+        res.status(201).json( {message:'Created Succesfully.'});
     }
 });
 
@@ -36,10 +37,9 @@ const createHospital = asyncHandler(  async ( req, res) => {
 const updateHospital = asyncHandler(async (req, res) => {
     const hospital = await Hospital.updateHospital(req.body, req.params.id);
     if (!hospital) {
-      res.status(404).json({message: "Hospital not found"});
-      //throw new Error("Hospital not found");
+        res.status(404).json({message: "Hospital not found"});
     } else {
-      res.status(200).json(hospital);
+        res.status(200).json(hospital);
     }
 });
 
@@ -47,9 +47,9 @@ const updateHospital = asyncHandler(async (req, res) => {
 const deleteHospital = asyncHandler( async ( req, res)=> {
     const record =  await  Hospital.deleteHospital(req.params.id);
     if (!record){
-        res.status(404).json('no Hospital record found with given id :'+ req.params.id);
+        res.status(404).json({message:'no Hospital record found with given id :'+ req.params.id});
     }else{
-        res.status(200).send("Deleted Succesfully.");
+        res.status(200).json({message:'Deleted Succesfully.'});
     }
 });
 

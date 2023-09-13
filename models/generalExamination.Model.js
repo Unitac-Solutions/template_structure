@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getgeneral_examinations = async () => {
-    const rows =  await  db.query("SELECT * From general_examination")
+    const [rows] =  await  db.query("SELECT * From general_examination")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -19,9 +19,9 @@ module.exports.deletegeneral_examination = async (id) => {
 } 
 
 module.exports.creategeneral_examination = async (obj , id = 0) => {
-    const [data] =  await  db.query(`INSERT INTO eneral_examination(
+    const [data] =  await  db.query(`INSERT INTO general_examination(
     motor, verbal, eye, pupil, equal, reaction, dehydrated, bleeding, estimated_blood_loss, urine_losses, ng_losses, cd_loses
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?)`,
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`,
     [obj.motor, obj.verbal, obj.eye, obj.pupil, obj.equal, obj.reaction, obj.dehydrated, obj.bleeding, obj.estimated_blood_loss, obj.urine_losses, obj.ng_losses, obj.cd_loses])
     .catch(err => console.log(err))
     return data;

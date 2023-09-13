@@ -1,20 +1,23 @@
-const express = require("express");
 const asyncHandler = require("express-async-handler")
 
 const Patient = require('../models/patient.Model');
+const { json } = require("body-parser");
 
 //________________________________________________________________________________________________
 const getPatients = asyncHandler( async ( req, res) => {
     const [patients] = await Patient.getPatients()
-    res.status(200).json(patients)
+    if(!patients){   
+        res.status(404).json({message: 'Patients not found'});
+    }else{
+        res.status(200).json(patients);
+    }
 });
 
 //________________________________________________________________________________________________
 const getPatient = asyncHandler( async ( req, res) => {
     const [patient] = await Patient.getPatient(req.params.id);
     if(!patient ){
-        res.status(404).json({message: "patient not found"})
-        //throw new Error("patient not found");
+        res.status(404).json({message: "patient not found"});
     }else{
         res.status(200).json(patient);
     }
@@ -24,11 +27,10 @@ const getPatient = asyncHandler( async ( req, res) => {
 const createPatient = asyncHandler(  async ( req, res) => {
     const {last_name, first_name, initials, age, gender, race, triage_id } = req.body;
     if (!last_name || !first_name || !initials || !age || !gender ||!race || !triage_id) {
-        res.status(400);
-        throw new Error("All fields are required. !");
+        res.status(400).json({message: 'All fields are required. !'});
     }else{
         await  Patient.createPatient(req.body);
-        res.status(201).send( "Created Succesfully.");
+        res.status(201).json( {message:'Created Succesfully.'});
     }
 });
 
@@ -37,7 +39,6 @@ const updatePatient = asyncHandler(async (req, res) => {
     const [patient] = await Patient.updatePatient(req.body, req.params.id);
     if (!patient) {
       res.status(404).json({message: "Patient not found"});
-      throw new Error("Patient not found");
     } else {
       res.status(200).json(patient);
     }
@@ -49,7 +50,7 @@ const deletePatient = asyncHandler( async ( req, res)=> {
     if (!record){
         res.status(404).json('no patient record found with given id :'+ req.params.id);
     }else{
-        res.status(200).send("Deleted Succesfully.");
+        res.status(200).json({message:'Deleted Succesfully.'});
     }
 });
 

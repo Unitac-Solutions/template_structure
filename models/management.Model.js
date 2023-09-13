@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getmanagements = async () => {
-    const rows =  await  db.query("SELECT * From management")
+    const [rows] =  await  db.query("SELECT * From management")
     .catch(err => console.log(err))
     return rows;
 } 
