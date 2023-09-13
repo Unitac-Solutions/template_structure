@@ -19,10 +19,11 @@ module.exports.deleteincident = async (id) => {
 } 
 
 module.exports.createincident = async (obj , id = 0) => {
+    console.log(obj.userInfo.user_id)
     const [data] =  await  db.query(`INSERT INTO incident(
-        trauma, location, dispatch_priority, trauma_specification, medical, medical_specification
-    ) VALUES(?,?,?,?,?,?)`,
-    [obj.trauma, obj.location, obj.dispatch_priority, obj.trauma_specification, obj.medical, obj.medical_specification, id])
+        trauma, location, dispatch_priority, trauma_specification, medical, medical_specification, created_by
+    ) VALUES(?,?,?,?,?,?,?)`,
+    [obj.trauma, obj.location, obj.dispatch_priority, obj.trauma_specification, obj.medical, obj.medical_specification, obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

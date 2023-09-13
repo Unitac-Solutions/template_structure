@@ -20,9 +20,9 @@ module.exports.deletesystematic = async (id) => {
 
 module.exports.createsystematic = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO systematic(
-        cns, cvs, abd, resp, headneck, msk
-    ) VALUES(?,?,?,?,?,?)`,
-    [obj.cns, obj.cvs, obj.abd, obj.resp, obj.headneck, obj.msk])
+        cns, cvs, abd, resp, headneck, msk, created_by
+    ) VALUES(?,?,?,?,?,?,?)`,
+    [obj.cns, obj.cvs, obj.abd, obj.resp, obj.headneck, obj.msk, obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

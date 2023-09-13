@@ -9,8 +9,8 @@ const getcomment_details = asyncHandler( async ( req, res) => {
 });
 
 const createcomment_detail = asyncHandler(  async ( req, res)=> {
-    const {comment} = req.body;
-    if(!comment){
+    const {comment,userInfo} = req.body;
+    if(!comment||!userInfo){
         res.status(400).json({message:"All fields are required. !"});
         //throw new Error("All fields are required. !"); 
     }else{
@@ -21,8 +21,8 @@ const createcomment_detail = asyncHandler(  async ( req, res)=> {
 });
 
 const getcomment_detail = asyncHandler( async ( req, res) => {
-    const [comment_detail] = await Comment_detail.getcomment_detail(req.params.id);
-    if(!comment_detail ){
+    const [comment_detail,userInfo] = await Comment_detail.getcomment_detail(req.params.id);
+    if(!comment_detail||!userInfo ){
         res.status(404);
         throw new Error("comment_detail not found");
     } 
@@ -30,7 +30,7 @@ const getcomment_detail = asyncHandler( async ( req, res) => {
 });
 
 const updatecomment_detail = asyncHandler(  async ( req, res)=> {
-    const [comment_detail] = await Comment_detail.updatecomment_detail(req.body, req.params.id);
+    const comment_detail = await Comment_detail.updatecomment_detail(req.body, req.params.id);
     if(!comment_detail){
         res.status(404);
         throw new Error("comment_detail not found");

@@ -20,9 +20,9 @@ module.exports.deletetew = async (id) => {
 
 module.exports.createtew = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO tew(
-        emergency, very_urgent, urgent, mobility, rr, hr, temp, avpu, trauma, sbp, walking, breathing, respiratory, pulse
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-    [obj.emergency, obj.very_urgent, obj.urgent, obj.mobility, obj.rr, obj.hr, obj.temp, obj.avpu, obj.trauma, obj.sbp, obj.walking, obj.breathing, obj.respiratory, obj.pulse])
+        emergency, very_urgent, urgent, mobility, rr, hr, temp, avpu, trauma, sbp, walking, breathing, respiratory, pulse, created_by
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+    [obj.emergency, obj.very_urgent, obj.urgent, obj.mobility, obj.rr, obj.hr, obj.temp, obj.avpu, obj.trauma, obj.sbp, obj.walking, obj.breathing, obj.respiratory, obj.pulse,  obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

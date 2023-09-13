@@ -9,11 +9,12 @@ const getmedical_aids = asyncHandler( async ( req, res) => {
 });
 
 const createmedical_aid = asyncHandler(  async ( req, res)=> {
-    const {provider, name, med_aid_option, number, dept_code, main_member, auth_number, next_of_kin_name, next_of_kin_contact, next_of_kin_relationship} = req.body;
-    if (!provider || !name|| !med_aid_option|| !number|| !dept_code|| !main_member|| !auth_number|| !next_of_kin_name|| !next_of_kin_contact|| !next_of_kin_relationship) {
-        res.status(400);
+    const {provider, name, med_aid_option, number, dept_code, main_member, auth_number, next_of_kin_name, next_of_kin_contact, next_of_kin_relationship,userInfo} = req.body;
+    if (!provider || !name|| !med_aid_option|| !number|| !dept_code|| !main_member|| !auth_number|| !next_of_kin_name|| !next_of_kin_contact|| !next_of_kin_relationship||!userInfo) {
+        
         throw new Error("All fields are required. !");
     }
+       await  Medical_aid.createmedical_aid(req.body);
         res.status(201).send( "Created Succesfully.")
 });
 
@@ -27,7 +28,7 @@ const getmedical_aid = asyncHandler( async ( req, res) => {
 });
 
 const updatemedical_aid = asyncHandler(  async ( req, res)=> {
-    const [medical_aid] = await Medical_aid.updatemedical_aid(req.body, req.params.id);
+    const medical_aid = await Medical_aid.updatemedical_aid(req.body, req.params.id);
     if(!medical_aid){
         res.status(404);
         throw new Error("medical_aid not found");

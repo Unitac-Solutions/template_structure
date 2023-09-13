@@ -3,13 +3,13 @@ const asyncHandler = require("express-async-handler")
 const Systematic = require("../models/systematic.Model")
 
 const getsystematics = asyncHandler( async ( req, res) => {
-    const systematics = await Systematic.getsystematics()
+    const [systematics] = await Systematic.getsystematics()
     res.status(200).json(systematics)
 });
 
 const createsystematic = asyncHandler(  async ( req, res)=> {
-    const {cns, cvs, abd, resp, headneck, msk} = req.body;
-    if (!cns|| !cvs|| !abd|| !resp|| !headneck|| !msk) {
+    const {cns, cvs, abd, resp, headneck, msk,userInfo} = req.body;
+    if (!cns|| !cvs|| !abd|| !resp|| !headneck|| !msk||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -27,7 +27,7 @@ const getsystematic = asyncHandler( async ( req, res) => {
 });
 
 const updatesystematic = asyncHandler(  async ( req, res)=> {
-    const [systematic] = await Systematic.updatesystematic(req.body, req.params.id);
+    const systematic = await Systematic.updatesystematic(req.body, req.params.id);
     if(!systematic){
         res.status(404);
         throw new Error("systematic not found");

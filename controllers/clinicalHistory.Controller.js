@@ -9,8 +9,8 @@ const getclinical_historys = asyncHandler( async ( req, res) => {
 });
 
 const createclinical_history = asyncHandler(  async ( req, res)=> {
-    const {history, med_condition, medication, surgery, allergy} = req.body;
-    if (!history|| !med_condition|| !medication|| !surgery|| !allergy) {
+    const {history, med_condition, medication, surgery, allergy,userInfo} = req.body;
+    if (!history|| !med_condition|| !medication|| !surgery|| !allergy||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -27,13 +27,15 @@ const getclinical_history = asyncHandler( async ( req, res) => {
     res.status(200).json(clinical_history)
 });
 
-const updateclinical_history = asyncHandler(  async ( req, res)=> {
-    const [clinical_history] = await Clinical_history.updateclinical_history(req.body, req.params.id);
+const updateclinical_history = asyncHandler( async ( req, res)=> {
+
+    const clinical_history = await Clinical_history.updateclinical_history(req.body, req.params.id);
     if(!clinical_history){
         res.status(404);
         throw new Error("clinical_history not found");
     }
-    res.status(201).json(clinical_history)
+
+    res.status(200).json(clinical_history)
 });
 
 const deleteclinical_history = asyncHandler( async ( req, res)=> {

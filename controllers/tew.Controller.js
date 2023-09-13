@@ -4,13 +4,13 @@ const asyncHandler = require("express-async-handler")
 const Tew = require("../models/tew.Model")
 
 const gettews = asyncHandler( async ( req, res) => {
-    const tews = await Tew.gettews()
+    const [tews] = await Tew.gettews()
     res.status(200).json(tews)
 });
 
 const createtew = asyncHandler(  async ( req, res)=> {
-    const {emergency, very_urgent, urgent, mobility, rr, hr, temp, avpu, trauma, sbp, walking, breathing, respiratory, pulse} = req.body;
-    if (!emergency || !very_urgent|| !urgent|| !mobility|| !rr|| !hr|| !temp|| !avpu|| !trauma|| !sbp|| !walking|| !breathing|| !respiratory|| !pulse) {
+    const {emergency, very_urgent, urgent, mobility, rr, hr, temp, avpu, trauma, sbp, walking, breathing, respiratory, pulse,userInfo} = req.body;
+    if (!emergency || !very_urgent|| !urgent|| !mobility|| !rr|| !hr|| !temp|| !avpu|| !trauma|| !sbp|| !walking|| !breathing|| !respiratory|| !pulse||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }

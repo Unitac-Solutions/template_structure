@@ -20,10 +20,9 @@ module.exports.deleteSpecialist = async (id) => {
 
 module.exports.createSpecialist = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO anticipated_specialist(
-        anticipated_specialist, anticipated_surgeon, anticipated_surgeon_specify, anticipated_specialist_specify
-    ) VALUES(?,?,?,?)`,
-    [obj.specalist, obj.surgeon, obj.surgeon_specify, obj.specialist_specify])
-    .catch(err => console.log(err))
+        anticipated_specialist, anticipated_surgeon, anticipated_surgeon_specify, anticipated_specialist_specify,created_by
+    ) VALUES(?,?,?,?,?)`,
+    [obj.anticipated_specialist, obj.anticipated_surgeon, obj.anticipated_surgeon_specify, obj.anticipated_specialist_specify, obj.userInfo.user_id] )
     return data;
 } 
 

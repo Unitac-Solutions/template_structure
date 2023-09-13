@@ -9,8 +9,8 @@ const getgeneral_examinations = asyncHandler( async ( req, res) => {
 });
 
 const creategeneral_examination = asyncHandler(  async ( req, res)=> {
-    const {motor, verbal, eye, pupil, equal, reaction, dehydrated, bleeding, estimated_blood_loss, urine_losses, ng_losses, cd_loses} = req.body;
-    if (!motor|| !verbal|| !eye|| !pupil|| !equal|| !reaction|| !dehydrated|| !bleeding|| !estimated_blood_loss|| !urine_losses|| !ng_losses|| !cd_loses) {
+    const {motor, verbal, eye, pupil, equal, reaction, dehydrated, bleeding, estimated_blood_loss, urine_losses, ng_losses, cd_loses,userInfo} = req.body;
+    if (!motor|| !verbal|| !eye|| !pupil|| !equal|| !reaction|| !dehydrated|| !bleeding|| !estimated_blood_loss|| !urine_losses|| !ng_losses|| !cd_loses||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }

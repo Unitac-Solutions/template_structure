@@ -9,8 +9,8 @@ const getpatient_cases = asyncHandler( async ( req, res) => {
 });
 
 const createpatient_case = asyncHandler(  async ( req, res)=> {
-    const {open_case} = req.body;
-    if (!open_case) {
+    const {open_case,userInfo} = req.body;
+    if (!open_case||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -19,6 +19,7 @@ const createpatient_case = asyncHandler(  async ( req, res)=> {
 });
 
 const getpatient_case = asyncHandler( async ( req, res) => {
+    console.log(req.params.id)
     const [patient_case] = await Patient_case.getCase(req.params.id);
     if(!patient_case ){
         res.status(404);
@@ -28,7 +29,7 @@ const getpatient_case = asyncHandler( async ( req, res) => {
 });
 
 const updatepatient_case = asyncHandler(  async ( req, res)=> {
-    const [patient_case] = await Patient_case.updateCase(req.body, req.params.id);
+    const patient_case = await Patient_case.updateCase(req.body, req.params.id);
     if(!patient_case){
         res.status(404);
         throw new Error("patient_case not found");

@@ -1,9 +1,9 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 const UserService = require("../models/user.model"); 
-
 const { genSaltSync , hashSync, compareSync } = require("bcrypt");
-const { sign } = require("jsonwebtoken");
+const { sign, verify } = require("jsonwebtoken");
+ 
 
 //const router = express.Router();
 
@@ -17,6 +17,13 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 
+const Logout =  (  (req, res) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+  return res.json({Status:"Success"})
+});
+
+
 const createUser = asyncHandler(async (req, res) => {
   const {
     first_name,
@@ -27,10 +34,9 @@ const createUser = asyncHandler(async (req, res) => {
     paramedic_id,
     type,
     email,
-    password,
-    created_by
+    password 
   } = req.body;
-
+    // console.log(req.body)
   if (
     !first_name ||
     !last_name ||
@@ -40,8 +46,7 @@ const createUser = asyncHandler(async (req, res) => {
     !paramedic_id ||
     !type ||
     !email ||
-    !password ||
-    !created_by
+    !password  
   ) {
     res.status(400);
     throw new Error("All fields are required!");
@@ -60,10 +65,10 @@ const createUser = asyncHandler(async (req, res) => {
     type,
     email,
     HashedPassword
-  }, created_by);
+  });
 
   if (user.error) {
-    res.status(400).json({ error: user.error });
+    res.status(201).json("user alreaady exist");
   } else {
     res.status(201).json("user  created successfuly");
   }
@@ -84,17 +89,14 @@ const getUser = asyncHandler(async (req, res) => {
 
 const updateUser = asyncHandler(async (req, res) => {
   const userId = req.params.id;
-  console.log(req.body.userInfo )
+  console.log(req.body)
   const {
     first_name,
     last_name,
     phone_number,
     work_number,
     role,
-    paramedic_id,
     type,
-    email,
-    password,
     userInfo
   } = req.body;
 
@@ -104,32 +106,27 @@ const updateUser = asyncHandler(async (req, res) => {
     !phone_number ||
     !work_number ||
     !role ||
-    !paramedic_id ||
-    !type ||
-    !email ||
-    !password  
+    !type  
   ) {
     res.status(400);
     throw new Error("All fields are required!");
   } 
  
-  const updatedUser = await UserService.updateUser(
+  const updateAdUser = await UserService.updateUser(
     {
       first_name,
       last_name,
       phone_number,
       work_number,
       role,
-      paramedic_id,
+ 
       type,
-      email,
-      password,
+ 
       userInfo
     },
     userId
   );
-
-  res.status(201).json(updatedUser);
+  res.status(201).json(updateAdUser);
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -143,7 +140,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   res.status(200).send("User Deleted Successfully.");
 });
-
 const login = asyncHandler(async (req, res) => {
   const body = req.body;
 
@@ -164,9 +160,9 @@ const login = asyncHandler(async (req, res) => {
         message: "Invalid login details",
       });
     }
-  
+
     const userWithoutPassword = { ...logUser, password: undefined };
-    const jsontoken = sign(
+    const accessToken = sign(
       { result: userWithoutPassword },
       process.env.TOKEN_KEY,
       {
@@ -174,10 +170,21 @@ const login = asyncHandler(async (req, res) => {
       }
     );
 
+    const refreshToken = sign(
+      { userId: userWithoutPassword._id },
+      process.env.TOKEN_KEY2,
+      {
+        expiresIn: "1d", // Set an appropriate expiration for refresh tokens
+      }
+    );
+ 
+    res.cookie('accessToken', accessToken, { httpOnly: false,  sameSite: 'None', secure: true });
+    res.cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'None', secure: true });
+ 
+ 
     return res.status(200).json({
-      success: 1,
-      message: "Login successful",
-      token: jsontoken,
+      islogged: true,
+      first_name: userWithoutPassword.first_name,
     });
   } catch (error) {
     console.error(error);
@@ -188,6 +195,27 @@ const login = asyncHandler(async (req, res) => {
   }
 });
 
+const refresh = asyncHandler(async (req, res) => {
+  const refreshToken = req.body.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).json({ success: 0, message: 'Refresh token missing.' });
+  }
+
+  verify(refreshToken, process.env.TOKEN_KEY2, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ success: 0, message: 'Invalid refresh token.' });
+    }
+
+    const accessToken = sign({ userId: decoded.userId }, process.env.TOKEN_KEY, { expiresIn: '1h' });
+    return res.status(200).json({ userLog: true });
+  });
+});
+
+
+const checkUser =  ( (req, res) => {
+ 
+  return res.json({Status:"Success", Name:req.name, message:"Authorized", type:req.type,id:req.user_id})
+});
 
 
 module.exports = {
@@ -196,5 +224,8 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
-  login
+  login,
+  refresh,
+  checkUser,
+  Logout
 };

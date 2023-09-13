@@ -9,8 +9,8 @@ const getvital_examinations = asyncHandler( async ( req, res) => {
 });
 
 const createvital_examination = asyncHandler(  async ( req, res)=> {
-    const {respiritory_rate, respiritory_rhythm, respiritory_depth, respiritory_symmetry, respiritory_saO2, pulse_rate, pulse_rhythm, pulse_volume, skin_colour, skin_moisture, Skin_temperature, skin_cap_refill, blood_pressure, hgt} = req.body;
-    if (!respiritory_rate|| !respiritory_rhythm|| !respiritory_depth|| !respiritory_symmetry|| !respiritory_saO2|| !pulse_rate|| !pulse_rhythm|| !pulse_volume|| !skin_colour|| !skin_moisture|| !Skin_temperature|| !skin_cap_refill|| !blood_pressure|| !hgt) {
+    const {respiritory_rate, respiritory_rhythm, respiritory_depth, respiritory_symmetry, respiritory_saO2, pulse_rate, pulse_rhythm, pulse_volume, skin_colour, skin_moisture, Skin_temperature, skin_cap_refill, blood_pressure, hgt,userInfo} = req.body;
+    if (!respiritory_rate|| !respiritory_rhythm|| !respiritory_depth|| !respiritory_symmetry|| !respiritory_saO2|| !pulse_rate|| !pulse_rhythm|| !pulse_volume|| !skin_colour|| !skin_moisture|| !Skin_temperature|| !skin_cap_refill|| !blood_pressure|| !hgt||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -28,7 +28,7 @@ const getvital_examination = asyncHandler( async ( req, res) => {
 });
 
 const updatevital_examination = asyncHandler(  async ( req, res)=> {
-    const [vital_examination] = await Vital_examination.updatevital_examination(req.body, req.params.id);
+    const  vital_examination = await Vital_examination.updatevital_examination(req.body, req.params.id);
     if(!vital_examination){
         res.status(404);
         throw new Error("vital_examination not found");

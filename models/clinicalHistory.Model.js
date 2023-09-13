@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getclinical_historys = async () => {
-    const rows =  await  db.query("SELECT * From clinical_history")
+    const [rows] =  await  db.query("SELECT * From clinical_history")
     .catch(err => console.log(err))
     return rows;
 } 
@@ -20,9 +20,9 @@ module.exports.deleteclinical_history = async (id) => {
 
 module.exports.createclinical_history = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO clinical_history(
-        history, med_condition, medication, surgery, allergy
-    ) VALUES(?,?,?,?,?)`,
-    [obj.history, obj.med_condition, obj.medication, obj.surgery, obj.allergy])
+        history, med_condition, medication, surgery, allergy, created_by
+    ) VALUES(?,?,?,?,?,?)`,
+    [obj.history, obj.med_condition, obj.medication, obj.surgery, obj.allergy,obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

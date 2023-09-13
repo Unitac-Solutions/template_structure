@@ -3,7 +3,7 @@ const app = express();
 const bodyparser = require('body-parser');
 const cors = require("cors");
 const db = require("./database/db");
-
+const cookieParser = require('cookie-parser');
 //Routed Imports
 const patientRoutes = require("./routes/patient.Routes");
 const anticipatedCareRoutes = require("./routes/anticipatedCare.Routes");
@@ -33,7 +33,11 @@ const hospitalsRoutes = require('./routes/hospitalLocation.Routes');
 
 //Middleware
 const errorHandler = require("./middleware/errorHandler");
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend's origin
+  credentials: true,
+}));
 app.use(bodyparser.json())
 app.use(express.json());
 app.use(errorHandler);

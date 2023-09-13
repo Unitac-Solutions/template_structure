@@ -19,10 +19,10 @@ module.exports.deletevital_examination = async (id) => {
 } 
 
 module.exports.createvital_examination = async (obj , id = 0) => {
-    const [data] =  await  db.query(`INSERT INTO vital_examination(
-    respiritory_rate, respiritory_rhythm, respiritory_depth, respiritory_symmetry, respiritory_saO2, pulse_rate, pulse_rhythm, pulse_volume, skin_colour, skin_moisture, Skin_temperature, skin_cap_refill, blood_pressure, hgt	
-    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-    [obj.respiritory_rate, obj.respiritory_rhythm, obj.respiritory_depth, obj.respiritory_symmetry, obj.respiritory_saO2, obj.pulse_rate, obj.pulse_rhythm, obj.pulse_volume, obj.skin_colour, obj.skin_moisture, obj.Skin_temperature, obj.skin_cap_refill, obj.blood_pressure, obj.hgt])
+    const data =  await  db.query(`INSERT INTO vital_examination(
+    respiritory_rate, respiritory_rhythm, respiritory_depth, respiritory_symmetry, respiritory_saO2, pulse_rate, pulse_rhythm, pulse_volume, skin_colour, skin_moisture, Skin_temperature, skin_cap_refill, blood_pressure, hgt,created_by
+    ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+    [obj.respiritory_rate, obj.respiritory_rhythm, obj.respiritory_depth, obj.respiritory_symmetry, obj.respiritory_saO2, obj.pulse_rate, obj.pulse_rhythm, obj.pulse_volume, obj.skin_colour, obj.skin_moisture, obj.Skin_temperature, obj.skin_cap_refill, obj.blood_pressure, obj.hgt,obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

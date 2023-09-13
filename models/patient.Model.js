@@ -18,10 +18,10 @@ module.exports.getPatient = async (id) => {
 //___ERROR(Cannot insert a patient information because has forein key constrainst which is has to do with CONSTRAINT `triage` FOREIGN KEY (`triage_id`)
 //Here I am also including the triage_id because of the above error while excluding it that the user would have 
 module.exports.createPatient = async (obj , id = 0) => {
-    const [data] =  await  db.query(`INSERT INTO patient(
-        last_name, first_name, initials, age, gender, race, triage_id
-    ) VALUES(?,?,?,?,?,?,?)`,
-    [obj.last_name, obj.first_name, obj.initials, obj.age, obj.gender, obj.race, obj.triage_id])
+    const data =  await  db.query(`INSERT INTO patient(
+        last_name, first_name, Initials, age, gender, race, triage_id,created_by,med_aid_id
+    ) VALUES(?,?,?,?,?,?,?,?,?)`,
+    [obj.last_name, obj.first_name, obj.Initials, obj.age, obj.gender, obj.race, obj.triage_id,  obj.userInfo.user_id,obj.med_aid_id])
     .catch(err => console.log(err))
     return data;
 }
@@ -38,12 +38,12 @@ module.exports.updatePatient = async (obj , id ) => {
     const [data] =  await  db.query(`UPDATE patient
     SET last_name = ?,
     first_name = ?,
-    initials = ?,
+    Initials = ?,
     age = ?,
     gender = ?,
     race = ?
     WHERE patient_id = ? `,
-     [obj.last_name, obj.first_name, obj.initials, obj.age, obj.gender, obj.race, id])
+     [obj.last_name, obj.first_name, obj.Initials, obj.age, obj.gender, obj.race, id])
     .catch(err => console.log(err))
     return data;
 }

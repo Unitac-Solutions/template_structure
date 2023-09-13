@@ -14,9 +14,9 @@ module.exports.getHospital = async (id) => {
 
 module.exports.createHospital = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO hospital(
-        anticipated_care_id, comment_detail_id, personel_id, handover_id
-    ) VALUES(?,?,?,?)`,
-    [obj.anticipated_care_id, obj.comment_detail_id, obj.personel_id, obj.handover_id])
+        anticipated_care_id, comment_detail_id, personel_id, handover_id,created_by
+    ) VALUES(?,?,?,?,?)`,
+    [obj.anticipated_care_id, obj.comment_detail_id, obj.personel_id, obj.handover_id,obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 }

@@ -3,9 +3,10 @@ const { verify } =  require("jsonwebtoken");
 
 module.exports = {
     checkToken: (req,res,next) => {
-        let token = req.get("authorization");
+        const token = req.cookies.accessToken;
+       // console.log(req.cookies)
          if(token){
-            token = token.slice(7);
+          //  token = token.slice(7);
             verify(token, process.env.TOKEN_KEY, (err, decoded) =>{
                 if(err){
                     res.json({
@@ -13,7 +14,7 @@ module.exports = {
                         message:"invalid token !"
                     })
                 }else{
-                    req.logAuth = decoded;
+                    req.body.userInfo  = decoded.result;
                              
                     next(); 
                 }
@@ -26,9 +27,10 @@ module.exports = {
          }
     },
     checkTokenAndAdmin: (req, res, next) => {
-        let token = req.get("authorization");
+ 
+        let token =req.cookies.accessToken;
         if (token) {
-            token = token.slice(7);
+          //  token = token.slice(7);
             verify(token, process.env.TOKEN_KEY, (err, decoded) => {
                 if (err) {
                     res.json({
@@ -53,15 +55,16 @@ module.exports = {
         } else {
             res.json({
                 success: 0,
-                message: "Access denied! Unauthorized user."
+                message: "Access denied! Unauthorized user 4."
             });
         }
     },
     
     checkTokenASuperdAdmin: (req, res, next) => {
-        let token = req.get("authorization");
+      
+        let token = req.cookies.accessToken;
         if (token) {
-            token = token.slice(7);
+            
             verify(token, process.env.TOKEN_KEY, (err, decoded) => {
                 if (err) {
                     res.json({
@@ -70,7 +73,6 @@ module.exports = {
                     });
                 } else {
                     // Set the decoded user data in the request object 
-                    req.user = decoded;
                     req.body.userInfo  = decoded.result;
                     // Check if the user is an admin
                     if (decoded.result.type == "triageAdmin"  && decoded.result.is_activated) {
@@ -89,6 +91,37 @@ module.exports = {
                 message: "Access denied! Unauthorized user."
             });
         }
-    }
+    },
+
+    checkAUser: (req,res,next) => {
+        const token = req.cookies.accessToken;
+           if(token){
+          
+            verify(token, process.env.TOKEN_KEY, (err, decoded) => {
+                if(err){
+                    res.json({
+                        success:0,
+                        message:"invalid token !"
+                    })
+                }else{
+                    //console.log(decoded.result.first_name)
+                    req.name= decoded.result.first_name; 
+                    req.type= decoded.result.type; 
+                    req.user_id = decoded.result.user_id; 
+                    next();
+                }
+            })
+         }else{
+            res.json({
+                success:0,
+                message:"Access denied! unauthorized user"
+            })
+         }
+    },
+    
+
+
+ 
 }
+
  

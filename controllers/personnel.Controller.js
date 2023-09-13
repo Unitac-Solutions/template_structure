@@ -7,8 +7,9 @@ const getpersonnels = asyncHandler( async ( req, res) => {
 });
 
 const createpersonnel = asyncHandler(  async ( req, res)=> {
-    const {last_name, first_name, initials, age, gender, race } = req.body;
-    if (!last_name || !first_name || !initials || !age || !gender ||!race) {
+    //console.log(req.body)
+    const {personnelId,last_name, first_name, occupation,userInfo} = req.body;
+    if (!personnelId||!last_name || !first_name || !occupation ||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }

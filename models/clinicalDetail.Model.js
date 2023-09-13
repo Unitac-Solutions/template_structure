@@ -13,10 +13,10 @@ module.exports.getClinical_detail = async (id) => {
 }
 
 module.exports.createClinical_detail = async (obj , id = 0) => {
-    const [data] =  await  db.query(`INSERT INTO clinical_detail(
-        systematic_id, general_examination_id, vital_examination_id, management_id
-    ) VALUES(?,?,?,?)`,
-    [obj.systematic_id, obj.general_examination_id, obj.vital_examination_id, obj.management_id])
+    const data =  await  db.query(`INSERT INTO clinical_detail(
+        systematic_id, general_examination_id, vital_examination_id, management_id, created_by
+    ) VALUES(?,?,?,?,?)`,
+    [obj.systematic_id, obj.general_examination_id, obj.vital_examination_id, obj.management_id,  obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 }

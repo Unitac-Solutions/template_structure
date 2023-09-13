@@ -22,8 +22,9 @@ const getHospital = asyncHandler( async ( req, res) => {
 
 //________________________________________________________________________________________________
 const createHospital = asyncHandler(  async ( req, res) => {
-    const {anticipated_care_id, comment_detail_id, personel_id, handover_id } = req.body;
-    if (!anticipated_care_id|| !comment_detail_id|| !personel_id|| !handover_id) {
+    console.log(req.body)
+    const {anticipated_care_id, comment_detail_id, personel_id, handover_id ,userInfo} = req.body;
+    if (!anticipated_care_id|| !comment_detail_id|| !personel_id|| !handover_id||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }else{

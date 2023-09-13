@@ -19,10 +19,11 @@ module.exports.deletehandover = async (id) => {
 } 
 
 module.exports.createhandover = async (obj , id = 0) => {
+   
     const [data] =  await  db.query(`INSERT INTO handover(
-        handover_by, handover_to, handover_title, handover_name, handover_mp_no, handover_signature, hand_signature2
-    ) VALUES(?,?,?,?,?,?,?)`,
-    [obj.handover_by, obj.handover_to, obj.handover_title, obj.handover_name, obj.handover_mp_no, obj.handover_signature, obj.hand_signature2])
+        handover_by, handover_to, handover_title, handover_name, handover_mp_no, handover_signature, hand_signature2,created_by
+    ) VALUES(?,?,?,?,?,?,?,?)`,
+    [obj.handover_by, obj.handover_to, obj.handover_title, obj.handover_name, obj.handover_mp_no, obj.handover_signature, obj.hand_signature2,  obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

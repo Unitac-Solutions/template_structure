@@ -9,8 +9,8 @@ const getincidents = asyncHandler( async ( req, res) => {
 });
 
 const createincident = asyncHandler(  async ( req, res)=> {
-    const {trauma, location, dispatch_priority, trauma_specification, medical, medical_specification} = req.body;
-    if (!trauma|| !location|| !dispatch_priority|| !trauma_specification|| !medical|| !medical_specification) {
+    const {trauma, location, dispatch_priority, trauma_specification, medical, medical_specification,userInfo} = req.body;
+    if (!trauma|| !location|| !dispatch_priority|| !trauma_specification|| !medical|| !medical_specification||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }

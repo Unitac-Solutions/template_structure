@@ -1,3 +1,4 @@
+const { mapValues } = require("async");
 const db = require("../database/db");
 
 module.exports.getpersonnels = async () => {
@@ -19,15 +20,16 @@ module.exports.deletepersonnel = async (id) => {
 } 
 
 module.exports.createpersonnel = async (obj , id = 0) => {
-    const [data] =  await  db.query(`INSERT INTO personnel(
-        personnelId, first_name, last_name, occupation
-    ) VALUES(?,?,?,?)`,
-    [obj.personnelId, obj.first_name, obj.last_name, obj.occupation])
+    const data =  await  db.query(`INSERT INTO personnel(
+        personnelId, first_name, last_name, occupation, created_by
+    ) VALUES(?,?,?,?,?)`,
+    [obj.personnelId, obj.first_name, obj.last_name, obj.occupation, obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 
 
 module.exports.updatepersonnel = async (obj , id ) => {
+    console.log(obj)
     const [data] =  await  db.query(`UPDATE personnel
     SET personnelId = ?, 
     first_name = ?, 

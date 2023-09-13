@@ -22,8 +22,9 @@ const getPatient = asyncHandler( async ( req, res) => {
 
 //________________________________________________________________________________________________
 const createPatient = asyncHandler(  async ( req, res) => {
-    const {last_name, first_name, initials, age, gender, race, triage_id } = req.body;
-    if (!last_name || !first_name || !initials || !age || !gender ||!race || !triage_id) {
+   console.log(req.body)
+    const {last_name, first_name, Initials, age, gender, race, triage_id, med_aid_id,userInfo} = req.body;
+      if (!last_name || !first_name || !Initials || !age || !gender ||!race || !med_aid_id||!triage_id||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }else{
@@ -34,7 +35,7 @@ const createPatient = asyncHandler(  async ( req, res) => {
 
 //________________________________________________________________________________________________
 const updatePatient = asyncHandler(async (req, res) => {
-    const [patient] = await Patient.updatePatient(req.body, req.params.id);
+    const patient = await Patient.updatePatient(req.body, req.params.id);
     if (!patient) {
       res.status(404).json({message: "Patient not found"});
       throw new Error("Patient not found");

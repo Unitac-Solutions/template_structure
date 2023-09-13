@@ -20,9 +20,9 @@ module.exports.deletecomment_detail = async (id) => {
 
 module.exports.createcomment_detail = async (obj , id = 0) => {
     const [data] =  await  db.query(`INSERT INTO comment_detail(
-        comment
-    ) VALUES(?)`,
-    [obj.comment])
+        comment,created_by
+    ) VALUES(?,?)`,
+    [obj.comment,  obj.userInfo.user_id])
     .catch(err => console.log(err))
     return data;
 } 

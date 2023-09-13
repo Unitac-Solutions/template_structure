@@ -8,8 +8,8 @@ const getTriages = asyncHandler( async ( req, res) => {
 });
 
 const createTriage = asyncHandler(  async ( req, res)=> {
-    const {user_type, branch, username, email, user_reg, street_name, city_town, province, postal_code} = req.body;
-    if (!user_type || !branch || !username || !email || !user_reg || !street_name || !city_town || !province || !postal_code) {
+    const {user_type, branch, username, email, user_reg, street_name, city_town, province, postal_code,userInfo} = req.body;
+    if (!user_type || !branch || !username || !email || !user_reg || !street_name || !city_town || !province || !postal_code||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -27,7 +27,7 @@ const getTriage = asyncHandler( async ( req, res) => {
 });
 
 const updateTriage = asyncHandler(  async ( req, res)=> {
-    const [triage] = await Triage.updateTriage(req.body, req.params.id);
+    const triage = await Triage.updateTriage(req.body, req.params.id);
     if(!triage){
         res.status(404);
         throw new Error("triage not found");

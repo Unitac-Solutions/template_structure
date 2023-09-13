@@ -8,8 +8,9 @@ const gethandovers = asyncHandler( async ( req, res) => {
 });
 
 const createhandover = asyncHandler(  async ( req, res)=> {
-    const {handover_by, handover_to, handover_title, handover_name, handover_mp_no, handover_signature, hand_signature2} = req.body;
-    if (!handover_by|| !handover_to|| !handover_title|| !handover_name|| !handover_mp_no|| !handover_signature|| !hand_signature2) {
+
+    const {handover_by, handover_to, handover_title, handover_name, handover_mp_no, handover_signature, hand_signature2,userInfo} = req.body;
+    if (!handover_by|| !handover_to|| !handover_title|| !handover_name|| !handover_mp_no|| !handover_signature|| !hand_signature2||!userInfo) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -27,7 +28,7 @@ const gethandover = asyncHandler( async ( req, res) => {
 });
 
 const updatehandover = asyncHandler(  async ( req, res)=> {
-    const [handover] = await Handover.updatehandover(req.body, req.params.id);
+    const handover = await Handover.updatehandover(req.body, req.params.id);
     if(!handover){
         res.status(404);
         throw new Error("handover not found");

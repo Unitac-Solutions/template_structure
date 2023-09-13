@@ -1,16 +1,19 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler")
-
 const Specialist = require("../models/anticipatedSpecialist.Model")
 
 const getspecialists = asyncHandler( async ( req, res) => {
-    const specialists = await Specialist.getSpecialists()
-    res.status(200).json(specialists)
+    const [specialists] = await Specialist.getSpecialists()
+    if(!specialists){
+        res.status(404).json({message: "Specialists not found"})
+    }else{
+        res.status(200).json(specialists)
+    }
 });
 
 const createspecialist = asyncHandler(  async ( req, res)=> {
-    const {specalist, surgeon, surgeon_specify, specialist_specify} = req.body;
-    if (!specalist || !surgeon || !surgeon_specify || !specialist_specify) {
+    const {anticipated_specialist, anticipated_surgeon, anticipated_surgeon_specify, anticipated_specialist_specify} = req.body;
+    if (!anticipated_specialist || !anticipated_surgeon || !anticipated_surgeon_specify || !anticipated_specialist_specify) {
         res.status(400);
         throw new Error("All fields are required. !");
     }
@@ -28,7 +31,7 @@ const getspecialist = asyncHandler( async ( req, res) => {
 });
 
 const updatespecialist = asyncHandler(  async ( req, res)=> {
-    const [specialist] = await Specialist.updateSpecialist(req.body, req.params.id);
+    const specialist = await Specialist.updateSpecialist(req.body, req.params.id);
     if(!specialist){
         res.status(404);
         throw new Error("specialist not found");
