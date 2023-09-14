@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Triage = require("../models/triage.Model")
 
 const getTriages = asyncHandler( async ( req, res) => {
-    const [triages] = await Triage.getTriages()
+    const triages = await Triage.getTriages()
     if(!triages){   
         res.status(404).json({message: 'Triages records not found'});
     }else{

@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const General_examination = require("../models/generalExamination.Model")
 
 const getgeneral_examinations = asyncHandler( async ( req, res) => {
-    const [general_examinations] = await General_examination.getgeneral_examinations()
+    const general_examinations = await General_examination.getgeneral_examinations()
     if(!general_examinations){   
         res.status(404).json({message: 'General Examinations records not found'});
     }else{

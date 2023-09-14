@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Handover = require("../models/handover.Model")
 
 const gethandovers = asyncHandler( async ( req, res) => {
-    const [handovers] = await Handover.gethandovers()
+    const handovers = await Handover.gethandovers()
     if(!handovers){   
         res.status(404).json({message: 'handovers records not found'});
     }else{

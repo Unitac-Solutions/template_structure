@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Management = require("../models/management.Model")
 
 const getmanagements = asyncHandler( async ( req, res) => {
-    const [managements] = await Management.getmanagements()
+    const managements = await Management.getmanagements()
     if(!managements){   
         res.status(404).json({message: 'Management records not found'});
     }else{

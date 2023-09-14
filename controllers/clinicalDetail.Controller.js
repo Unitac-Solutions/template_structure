@@ -4,7 +4,7 @@ const Clinical = require('../models/clinicalDetail.Model');
 
 
 const getclinicals = asyncHandler( async ( req, res) => {
-    const [clinicals] = await Clinical.getClinical_details();
+    const clinicals = await Clinical.getClinical_details();
     
     if(!clinicals){
         res.status(404).json({ message: 'Clinicals Details records not found'});

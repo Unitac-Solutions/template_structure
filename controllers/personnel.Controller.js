@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler")
 const Personnel = require("../models/personnel.Model")
 
 const getpersonnels = asyncHandler( async ( req, res) => {
-    const [personnels] = await Personnel.getpersonnels()
+    const personnels = await Personnel.getpersonnels()
     if(!personnels){   
         res.status(404).json({message: 'Personel Records not found'});
     }else{

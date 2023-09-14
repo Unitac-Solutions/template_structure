@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Comment_detail = require("../models/commentDetail.Model")
 
 const getcomment_details = asyncHandler( async ( req, res) => {
-    const [comment_details] = await Comment_detail.getcomment_details()
+    const comment_details = await Comment_detail.getcomment_details()
     if(!comment_details){   
         res.status(404).json({message: 'Comment details records not found'});
     }else{

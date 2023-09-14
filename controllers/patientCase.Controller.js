@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Patient_case = require("../models/patientCase.Model")
 
 const getpatient_cases = asyncHandler( async ( req, res) => {
-    const [patient_cases] = await Patient_case.getCases()
+    const patient_cases = await Patient_case.getCases()
     if(!patient_cases){   
         res.status(404).json({message: 'Patient Cases not found'});
     }else{

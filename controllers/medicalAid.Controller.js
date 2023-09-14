@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Medical_aid = require("../models/medicalAid.Model")
 
 const getmedical_aids = asyncHandler( async ( req, res) => {
-    const [medical_aids] = await Medical_aid.getmedical_aids()
+    const medical_aids = await Medical_aid.getmedical_aids()
     if(!medical_aids){   
         res.status(404).json({message: 'Medical Aids records not found'});
     }else{

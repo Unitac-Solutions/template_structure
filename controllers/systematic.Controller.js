@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Systematic = require("../models/systematic.Model")
 
 const getsystematics = asyncHandler( async ( req, res) => {
-    const [systematics] = await Systematic.getsystematics()
+    const systematics = await Systematic.getsystematics()
     if(!systematics){   
         res.status(404).json({message: 'Systematics records not found'});
     }else{

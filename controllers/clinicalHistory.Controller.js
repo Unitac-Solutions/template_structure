@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Clinical_history = require("../models/clinicalHistory.Model")
 
 const getclinical_historys = asyncHandler( async ( req, res) => {
-    const [clinical_historys] = await Clinical_history.getclinical_historys()
+    const clinical_historys = await Clinical_history.getclinical_historys()
     
     if(clinical_historys.length === 0){   
         res.status(404).json({message: 'Clinical Details not found'});

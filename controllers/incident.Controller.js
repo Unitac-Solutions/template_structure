@@ -4,7 +4,7 @@ const Incident = require("../models/incident.Model");
 const { json } = require("body-parser");
 
 const getincidents = asyncHandler( async ( req, res) => {
-    const [incidents] = await Incident.getincidents()
+    const incidents = await Incident.getincidents()
     if(!incidents){   
         res.status(404).json({message: 'Incidents records not found'});
     }else{

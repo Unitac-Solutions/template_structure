@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 const AnticipatedCare = require("../models/anticipatedCare.Model");
 
 const getAnticipatedCares = asyncHandler( async ( req, res) => {
-    const [anticipatedCare] = await AnticipatedCare.getAnticipatedCares()
+    const anticipatedCare = await AnticipatedCare.getAnticipatedCares()
     
     if(!anticipatedCare){
         res.status(404).json({message: 'Anticipated care records not found'});

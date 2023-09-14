@@ -5,7 +5,7 @@ const { json } = require("body-parser");
 
 //________________________________________________________________________________________________
 const getPatients = asyncHandler( async ( req, res) => {
-    const [patients] = await Patient.getPatients()
+    const patients = await Patient.getPatients()
     if(!patients){   
         res.status(404).json({message: 'Patients not found'});
     }else{

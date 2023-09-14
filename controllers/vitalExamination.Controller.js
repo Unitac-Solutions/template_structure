@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler")
 const Vital_examination = require("../models/vitalEximination.Model")
 
 const getvital_examinations = asyncHandler( async ( req, res) => {
-    const [vital_examinations] = await Vital_examination.getvital_examinations()
+    const vital_examinations = await Vital_examination.getvital_examinations()
     
     if(!vital_examinations){   
         res.status(404).json({message: 'Vital Examination Not found'});

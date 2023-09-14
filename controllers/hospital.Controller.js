@@ -4,7 +4,7 @@ const Hospital = require('../models/hospital.Model');
 
 ///________________________________________________________________________________________________
 const getHospitals = asyncHandler( async ( req, res) => {
-    const [hospitals] = await Hospital.getHospitals()
+    const hospitals = await Hospital.getHospitals()
     if(!hospitals){   
         res.status(404).json({message: 'Hospitals records not found'});
     }else{

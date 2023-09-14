@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler")
 const Specialist = require("../models/anticipatedSpecialist.Model")
 
 const getspecialists = asyncHandler( async ( req, res) => {
-    const [specialists] = await Specialist.getSpecialists()
+    const specialists = await Specialist.getSpecialists()
     
     if(!specialists){
         res.status(404).json({ message: 'Specialists records not found'});
