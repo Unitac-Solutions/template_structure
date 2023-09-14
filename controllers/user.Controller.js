@@ -1,4 +1,3 @@
-const express = require("express");
 const asyncHandler = require("express-async-handler");
 const UserService = require("../models/user.model"); 
 const { genSaltSync , hashSync, compareSync } = require("bcrypt");

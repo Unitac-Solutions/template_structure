@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getAnticipatedCares = async () => {
-    const rows =  await  db.query("SELECT * From anticipated_care")
+    const [rows] =  await  db.query("SELECT * From anticipated_care")
     .catch(err => console.log(err))
     return rows;
 } 

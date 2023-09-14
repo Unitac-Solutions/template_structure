@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.gethandovers = async () => {
-    const rows =  await  db.query("SELECT * From handover")
+    const [rows] =  await  db.query("SELECT * From handover")
     .catch(err => console.log(err))
     return rows;
 } 

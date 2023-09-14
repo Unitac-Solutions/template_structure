@@ -1,7 +1,7 @@
 const db = require("../database/db");
 
 module.exports.getCases = async () => {
-    const rows =  await  db.query("SELECT * FROM patient_case")
+    const [rows] =  await  db.query("SELECT * FROM patient_case")
     .catch(err => console.log(err))
     return rows;
 } 
