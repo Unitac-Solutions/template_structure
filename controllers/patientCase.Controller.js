@@ -12,8 +12,8 @@ const getpatient_cases = asyncHandler( async ( req, res) => {
 });
 
 const createpatient_case = asyncHandler(  async ( req, res)=> {
-    const {patient_id, open_case, incident_id, clinical_id, hospital_id, clinical_detail_id,userInfo} = req.body;
-    if (!patient_id|| !open_case|| !incident_id|| !clinical_id|| !hospital_id|| !clinical_detail_id||!userInfo) {
+    const {patient_id, open_case, incident_id, clinical_id, hospital_id, clinical_detail_id} = req.body;
+    if (!patient_id|| !open_case|| !incident_id|| !clinical_id|| !hospital_id|| !clinical_detail_id) {
         res.status(400).json({message: 'All fields are required. !'});
     }else{
         await  Patient_case.createCase(req.body);

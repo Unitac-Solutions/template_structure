@@ -20,9 +20,9 @@ module.exports.deleteCase = async (id) => {
 
 module.exports.createCase = async (obj , id = 0) => {
     const data =  await  db.query(`INSERT INTO patient_case(
-        patient_id, open_case, incident_id, clinical_id, hospital_id, clinical_detail_id,created_by	
-    ) VALUES(?,?,?,?,?,?,?)`,
-    [obj.patient_id, obj.open_case, obj.incident_id, obj.clinical_id, obj.hospital_id, obj.clinical_detail_id,obj.userInfo.user_id])
+        patient_id, open_case, incident_id, clinical_id, hospital_id, clinical_detail_id	
+    ) VALUES(?,?,?,?,?,?)`,
+    [obj.patient_id, obj.open_case, obj.incident_id, obj.clinical_id, obj.hospital_id, obj.clinical_detail_id])
     .catch(err => console.log(err))
     return data;
 } 

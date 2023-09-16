@@ -3,6 +3,7 @@ const { verify } =  require("jsonwebtoken");
 
 module.exports = {
     checkToken: (req,res,next) => {
+        console.log(req.body)
         const token = req.cookies.accessToken;
        // console.log(req.cookies)
          if(token){
@@ -22,7 +23,7 @@ module.exports = {
          }else{
             res.json({
                 success:0,
-                message:"Access denied! unauthorized user"
+                message:"Status: Access denied! unauthorized user"
             })
          }
     },

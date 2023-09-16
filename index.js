@@ -27,17 +27,24 @@ const viatlExaminationRoutes = require("./routes/vitalExamination.Routes");
 const userRoutes = require("./routes/user.Routes");
 
 const locationRoutes = require('./routes/location.Routes');
-const etaRoutes = require('./routes/eta.Routes');
+const etaRoutes = require('./routes/etaRoutes');
 const directionsRoutes = require('./routes/direction.Routes');
 const hospitalsRoutes = require('./routes/hospitalLocation.Routes');
+
+const kafkaHospitalRoute = require('./Routes/kafkaHospitalRoute');
+const kafkaPatientRoute = require('./Routes/kafkaPatientRoute');
+const kafkaParamedicRoute = require('./Routes/kafkaParamedicRoute');
+ 
+
 
 //Middleware
 const errorHandler = require("./middleware/errorHandler");
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your frontend's origin
+  origin: ['http://localhost:3002', 'http://localhost:3000','http://localhost:3004','http://localhost:3003'], // Replace with your frontend's origins
   credentials: true,
 }));
+
 app.use(bodyparser.json())
 app.use(express.json());
 app.use(errorHandler);
@@ -70,6 +77,10 @@ app.use('/api/location', locationRoutes);
 app.use('/api/eta', etaRoutes);
 app.use('/api/directions', directionsRoutes);
 app.use('/api/hospitalLocation', hospitalsRoutes);
+
+app.use('/api/kafkaHospital', kafkaHospitalRoute); // specifying a base URL for my API routes
+app.use('/api/kafkaPatient', kafkaPatientRoute);
+app.use('/api/kafkaParamedic', kafkaParamedicRoute);
 
 const PORT = process.env.URL_PORT || 5000;
 
