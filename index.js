@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express();
 const bodyparser = require('body-parser');
+const dotenv = require("dotenv").config();
 //require('express-async-errors');
 
 const db = require("./database/db");
@@ -14,9 +15,12 @@ app.use('/api/employees', employeeRoutes);
 app.use('/api/patient', patientRoutes);
 app.use(errorHandler);
 
+
+const port = process.env.PORT || 5000;
+
 db.query("SELECT 1")
 .then(data  => console.log("db conncetion succeded."),
-    app.listen(3000, () => 
-    console.log("Server started at 3000")))
+    app.listen(port, () => 
+    console.log(`Server started at ${port}`)))
 .catch(err => console.log("db connection failed." + err))
 
