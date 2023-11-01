@@ -17,10 +17,11 @@ app.use(errorHandler);
 
 
 const port = process.env.PORT || 5000;
+const address = '0.0.0.0';
 
 db.query("SELECT 1")
 .then(data  => console.log("db conncetion succeded."),
-    app.listen(port, () => 
+    app.listen(port, address, () => 
     console.log(`Server started at ${port}`)))
 .catch(err => console.log("db connection failed." + err))
 
