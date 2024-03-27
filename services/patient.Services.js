@@ -1,16 +1,16 @@
 const db = require("../database/db");
 
 module.exports.getAllPatients = async () => {
-    const rows =  await  db.query("SELECT * From patients")
+    const [rows] =  await  db.query("SELECT * From patient")
     .catch(err => console.log(err))
     return rows;
 } 
 
 module.exports.getPatient = async (id) => {
-    const [row] =  await  db.query("SELECT * From patients WHERE id = ?",[id])
+    const [row] =  await  db.query("SELECT * From patient WHERE patient_id = ?",[id])
     .catch(err => console.log(err))
     return row;
-} 
+}
 
 module.exports.deletePatientbyId = async (id) => {
     const [{affectedRows}] =  await  db.query("DELETE From patients WHERE id = ?",[id])

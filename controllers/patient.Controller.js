@@ -1,4 +1,3 @@
-//const bcrypt = require("bcryptjs");
 const express = require("express");
 const asyncHandler = require("express-async-handler")
 
@@ -8,9 +7,12 @@ const Patient = require("../services/patient.Services")
 //@route GET /api/patients
 //@access private
 const getPatients = asyncHandler( async ( req, res) => {
-    const patients = await db.query("SELECT * From employees")
-    
-    res.status(200).json(patients)
+    const patients = await Patient.getAllPatients()
+    if(!patients){   
+        res.status(404).json({message: 'Patients not found'});
+    }else{
+        res.status(200).json(patients);
+    }
 });
 
 const createPatient = asyncHandler(  async ( req, res)=> {
